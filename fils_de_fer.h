@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 18:22:19 by atoulous          #+#    #+#             */
-/*   Updated: 2016/05/20 20:30:50 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/05/21 21:50:05 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # define MAP (*t_var)->map
 # define TAB (*t_var)->tab
+# define PLS (*t_var)->pls
 # define MLX t_var->mlx
 # define WIN t_var->win
 # define X (*t_var)->x
@@ -33,6 +34,7 @@ typedef struct		s_struct
 	void			*win;
 	char			*map;
 	char			**tab;
+	char			**pls;
 	char			*color;
 	int				x;
 	int				y;
