@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 17:23:13 by atoulous          #+#    #+#             */
-/*   Updated: 2016/05/19 16:29:35 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/05/18 20:21:03 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ char	*ft_strjoinfree(char const *s1, char const *s2)
 		return (NULL);
 	new = ft_strcpy(new, s1);
 	new = ft_strcat(new, s2);
-	free((char *)s1);
+	free(&s1);
 	return (new);
 }

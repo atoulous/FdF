@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 14:16:05 by atoulous          #+#    #+#             */
-/*   Updated: 2016/05/18 20:27:00 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/16 16:55:26 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <sys/types.h>
-
-# include "get_next_line.h"
 
 typedef struct		s_list
 {
@@ -94,5 +92,6 @@ void				ft_exit(int what);
 void				ft_usage(char *name, char *usage);
 int					ft_nbrlen(int nb);
 char				*ft_strndup(const char *src, size_t n);
+char				*ft_itoa_base(int value, int base);
 
 #endif
