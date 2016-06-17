@@ -6,117 +6,95 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:56:20 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/16 13:00:34 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/17 21:52:45 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fils_de_fer.h"
 
-static int	get_key(int keycode, t_struct *t_var)
+void	reset_pos(t_struct *t_var)
 {
+	ZOOM = 20;
+	H = 1;
+	WI = 0;
+	HI = 0;
+	CT1 = 1;
+	CT2 = 1;
+}
+
+int		get_key(int keycode, t_struct *t_var)
+{
+	refresh_screen(t_var);
 	if (keycode == 53)
 		exit(0);
-	return (0);
+	if (keycode == 24 || keycode == 69)
+		ZOOM += (ZOOM < 50) ? 2 : 0;
+	if (keycode == 27 || keycode == 78)
+		ZOOM -= (ZOOM > 0) ? 2 : 0;
+	if (keycode == 123 || keycode == 124)
+		WI += keycode == 123 ? -10 : 10;
+	if (keycode == 125 || keycode == 126)
+		HI += keycode == 125 ? 10 : -10;
+	if (keycode == 116 || keycode == 121)
+		H += keycode == 116 ? 1 : -1;
+	if (keycode == 8)
+		(CT1 += CT1 < 1 ? 0.1 : 0) && (CT2 += CT2 < 1 ? 0.1 : 0);
+	if (keycode == 9)
+		(CT1 -= CT1 > 0.5 ? 0.1 : 0) && (CT2 -= CT2 > 0.5 ? 0.1 : 0);
+	if (keycode == 49)
+		reset_pos(t_var);
+	return (1);
 }
 
-static int	find_x(t_struct *t_var, int x, int y)
+int		init_fils_de_flute(t_struct *t_var, char *map)
 {
-	Z = H * ft_atoi(TAB[y][x]);
-	return (ZOOM * (CT1 * x - CT2 * y) + (WIDTH_WIN / 2));
+	WIDTH_WIN = (XMAX * 100) > 1920 ? 1920 : XMAX * 100;
+	HEIGHT_WIN = (YMAX * 100) > 1080 ? 1080 : YMAX * 100;
+	H = 1;
+	ZOOM = 20;
+	BPP = 32;
+	WIDTH = (WIDTH_WIN / BPP);
+	HEIGHT = (HEIGHT_WIN / BPP);
+	HI = 0;
+	WI = 0;
+	CT1 = 1;
+	CT2 = 1;
+	ZMAX = 0;
+	MLX = mlx_init();
+	WIN = mlx_new_window(MLX, WIDTH_WIN, HEIGHT_WIN, map);
+	IMG = mlx_new_image(MLX, WIDTH_WIN, HEIGHT_WIN);
+	DATA = mlx_get_data_addr(IMG, &BPP, &SIZELINE, &ENDIAN);
+	return (1);
 }
 
-static int	find_y(t_struct *t_var, int x, int y)
-{
-	Z = H * ft_atoi(TAB[y][x]);
-	return ((ZOOM * (CT1 / 2 * x + CT2 / 2 * y) - Z) + (HEIGHT_WIN / 3));
-}
-
-static void fils_de_img(t_struct *t_var)
-{
-	int		x;
-	int		y;
-
-	y = -1;
-	while (++y <= YMAX)
-	{
-		x = -1;
-		while (++x <= XMAX)
-		{
-			if (x < XMAX -1 && y < YMAX - 1)
-			{
-				X1 = find_x(t_var, x, y);
-				X2 = find_x(t_var, x + 1, y);
-				Y1 = find_y(t_var, x, y);
-				Y2 = find_y(t_var, x + 1, y);
-				get_color(t_var, y, x);
-				draw_line(t_var);
-			}
-		}
-	}
-	y = -1;
-	while (++y <= YMAX)
-	{
-		x = -1;
-		while (++x < XMAX)
-		{
-			if (x < XMAX -1 && y < YMAX - 1)
-			{
-				X1 = find_x(t_var, x, y);
-				X2 = find_x(t_var, x, y + 1);
-				Y1 = find_y(t_var, x, y);
-				Y2 = find_y(t_var, x, y + 1);
-				get_color(t_var, y, x);
-				draw_line(t_var);
-			}
-		}
-	}
-
-}
-
-static void	fils_de_fer(int fd, char *map)
+void	fils_de_fer(int fd, char *map)
 {
 	t_struct	*t_var;
 
 	if (!(t_var = (t_struct*)ft_memalloc(sizeof(t_struct))))
 		return (exit(EXIT_FAILURE));
-	ZMAX = 0;
-	get_map(t_var, fd);
-	WIDTH_WIN = (XMAX * 50) > 1920 ? 1920 : XMAX * 50;
-	HEIGHT_WIN = (YMAX * 50) > 1080 ? 1080 : YMAX * 50;
-	H = 10;
-	ZOOM = 20;
-	BPP = 32;
-	WIDTH = (WIDTH_WIN / BPP);
-	HEIGHT = (HEIGHT_WIN / BPP);
-	CT1 = 1;
-	CT2 = 1;
-	MLX = mlx_init();
-	WIN = mlx_new_window(MLX, WIDTH_WIN, HEIGHT_WIN, map);
-	IMG = mlx_new_image(MLX, WIDTH_WIN, HEIGHT_WIN);
-	DATA = mlx_get_data_addr(IMG, &BPP, &SIZELINE, &ENDIAN);
-	fils_de_img(t_var);
-	mlx_put_image_to_window(MLX, WIN, IMG, 0, 0);
-	mlx_key_hook(WIN, get_key, t_var);
+	parse_fils_de_feu(t_var, fd);
+	init_fils_de_flute(t_var, map);
+	mlx_loop_hook(MLX, fils_lines, t_var);
+	//mlx_expose_hook(WIN, fils_lines, t_var);
+	//mlx_key_hook(WIN, get_key, t_var);
+	mlx_hook(WIN, 2, 3, get_key, t_var);
 	mlx_loop(MLX);
+	mlx_destroy_image(MLX, IMG);
 }
 
 int		main(int ac, char **av)
 {
 	int		fd;
-	int		i;
 
 	if (ac < 2)
 		ft_putstr("Usage : ./fdf <filename>\n");
 	else
 	{
-		i = 0;
-		while (ac > ++i)
-		{
-			fd = open(av[i], O_RDONLY);
-			if (fd > 0)
-				fils_de_fer(fd, av[i]);
-			close(fd);
-		}
+		fd = open(av[1], O_RDONLY);
+		if (fd > 0)
+			fils_de_fer(fd, av[1]);
+		close(fd);
 	}
 	return (0);
 }

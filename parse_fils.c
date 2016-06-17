@@ -6,11 +6,38 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/07 11:34:04 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/16 15:48:16 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/17 21:49:42 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fils_de_fer.h"
+
+void	refresh_screen(t_struct *t_var)
+{
+	mlx_destroy_image(MLX, IMG);
+	IMG = mlx_new_image(MLX, WIDTH_WIN, HEIGHT_WIN);
+	DATA = mlx_get_data_addr(IMG, &BPP, &SIZELINE, &ENDIAN);
+}
+
+void	get_color(t_struct *t_var, int y, int x)
+{
+	int		i;
+	char	*coolor;
+
+	if (Z > ZMAX)
+		ZMAX = Z;
+	i = 0;
+	while (TAB[y][x][i] != ',' && TAB[y][x][i])
+		i++;
+	if (TAB[y][x][i] == ',')
+	{
+		coolor = ft_strsub(TAB[y][x], i + 3, ft_strlen(TAB[y][x]) - i);
+		COLOR = ft_atoi(ft_convert_base(coolor, BASE16, BASE10));
+		free(coolor);
+	}
+	else
+		COLOR = 0;
+}
 
 int		get_xmax(char *line)
 {
@@ -33,7 +60,7 @@ int		get_xmax(char *line)
 	return (c);
 }
 
-void	get_map(t_struct *t_var, int fd)
+void	parse_fils_de_feu(t_struct *t_var, int fd)
 {
 	char	*line;
 	int		y;
@@ -60,27 +87,4 @@ void	get_map(t_struct *t_var, int fd)
 	}
 	free(PLS);
 	free(MAP);
-}
-
-void	get_color(t_struct *t_var, int y, int x)
-{
-	int		i;
-	char	*coolor;
-	int cool = 0xFF;
-
-	if (Z > ZMAX)
-		ZMAX = Z;
-	i = 0;
-	while (TAB[y][x][i] != ',' && TAB[y][x][i])
-		i++;
-	if (TAB[y][x][i] == ',')
-	{
-
-		coolor = ft_strsub(TAB[y][x], i + 3, ft_strlen(TAB[y][x]) - i);
-		COLOR = mlx_get_color_value(MLX, (int)coolor);
-		free(coolor);
-		printf("cool=%d\n", cool);
-	}
-	else
-		COLOR = 0;
 }
