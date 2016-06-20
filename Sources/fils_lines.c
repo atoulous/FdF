@@ -6,18 +6,18 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/16 22:54:22 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/17 21:54:15 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/20 16:50:04 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fils_de_fer.h"
 
-static int	find_x(t_struct *t_var, int x, int y)
+int		find_x(t_struct *t_var, int x, int y)
 {
 	return (ZOOM * (CT1 * x - CT2 * y) + (WIDTH_WIN / 2 + WI));
 }
 
-static int	find_y(t_struct *t_var, int x, int y)
+int		find_y(t_struct *t_var, int x, int y)
 {
 	Z = H * ft_atoi(TAB[y][x]);
 	if (!COLOR)
@@ -36,7 +36,7 @@ static int	find_y(t_struct *t_var, int x, int y)
 	return ((ZOOM * (CT1 / 2 * x + CT2 / 2 * y) - Z) + (HEIGHT_WIN / 3 + HI));
 }
 
-static void	fils_line_x(t_struct *t_var)
+void	fils_line_x(t_struct *t_var)
 {
 	int		x;
 	int		y;
@@ -60,7 +60,7 @@ static void	fils_line_x(t_struct *t_var)
 	}
 }
 
-static void	fils_line_y(t_struct *t_var)
+void	fils_line_y(t_struct *t_var)
 {
 	int		x;
 	int		y;
@@ -84,7 +84,7 @@ static void	fils_line_y(t_struct *t_var)
 	}
 }
 
-int			fils_lines(t_struct *t_var)
+int		fils_lines(t_struct *t_var)
 {
 	fils_line_x(t_var);
 	fils_line_y(t_var);

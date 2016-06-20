@@ -6,16 +6,19 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 18:22:19 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/16 14:28:55 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/20 20:27:52 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILS_DE_FER_H
 # define FILS_DE_FER_H
 
-# include "Libft/libft.h"
+# include "../Libs/libft/libft.h"
 # include "mlx.h"
 # include "math.h"
+
+# define BASE10 "0123456789"
+# define BASE16 "0123456789ABCDEF"
 
 # define MAP t_var->map
 # define TAB t_var->tab
@@ -33,6 +36,8 @@
 # define WIDTH t_var->width
 # define WIDTH_WIN t_var->width_win
 # define ZOOM t_var->zoom
+# define HI t_var->hi
+# define WI t_var->wi
 # define X t_var->x
 # define X1 t_var->x1
 # define X2 t_var->x2
@@ -48,6 +53,7 @@
 # define ZMAX t_var->zmax
 # define CT1 t_var->ct1
 # define CT2 t_var->ct2
+# define KEY_USE t_var->key_use
 
 typedef struct		s_struct
 {
@@ -67,6 +73,8 @@ typedef struct		s_struct
 	int				width;
 	int				width_win;
 	int				zoom;
+	int				hi;
+	int				wi;
 	int				x;
 	int				y;
 	int				x1;
@@ -82,11 +90,19 @@ typedef struct		s_struct
 	int				zmax;
 	float			ct1;
 	float			ct2;
+	int				key_use;
 }					t_struct;
 
 int					main(int ac, char **av);
-void				get_map(t_struct *t_var, int fd);
+int					get_key(int keycode, t_struct *t_var);
+int					init_fils_de_flute(t_struct *t_var, char *map);
+int					fils_lines(t_struct *t_var);
+void				fils_de_fer(int fd, char *map);
+void				parse_fils_de_feu(t_struct *t_var, int fd);
 void				get_color(t_struct *t_var, int y, int x);
-void				draw_line(t_struct *t_var);
+void				draw_lines(t_struct *t_var);
+void				refresh_screen(t_struct *t_var);
+void				fill_image(t_struct *t_var);
+void				free_fils(t_struct *t_var);
 
 #endif
