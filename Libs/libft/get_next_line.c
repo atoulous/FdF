@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 20:36:52 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/22 16:46:53 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/22 19:39:45 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,11 @@ static int		put_next_line(char **line, char *buf, t_line *elem, int ret)
 int				get_next_line(const int fd, char **line)
 {
 	static t_line	*begin = NULL;
-	t_line			*elem = NULL;
+	t_line			*elem;
 	char			buf[BUFF_SIZE + 1];
 	int				ret;
 
+	elem = NULL;
 	if (fd < 0 || !line || read(fd, *line, 0) < 0)
 		return (-1);
 	if (!begin)
@@ -109,8 +110,7 @@ int				get_next_line(const int fd, char **line)
 			ft_bzero(buf, ft_strlen(buf));
 		}
 		if (TMP && ret == 0)
-			if (put_next_line(line, buf, elem, ret))
-				return (1);
+			return (put_next_line(line, buf, elem, ret) ? 1 : 0);
 	}
 	get_free(begin, elem);
 	return (0);
