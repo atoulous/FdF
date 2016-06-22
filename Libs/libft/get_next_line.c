@@ -6,11 +6,34 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 20:36:52 by atoulous          #+#    #+#             */
-/*   Updated: 2016/05/20 14:51:00 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/22 16:46:53 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static void		get_free(t_line *begin, t_line *elem)
+{
+	if (elem->fd == begin->fd)
+	{
+		begin = begin->next;
+		free(elem->tmp);
+		free(elem);
+	}
+	else
+	{
+		while (begin->next)
+		{
+			if (elem->fd == begin->next->fd)
+			{
+				begin->next = begin->next->next;
+				free(elem->tmp);
+				free(elem);
+			}
+			begin = begin->next;
+		}
+	}
+}
 
 static t_line	*get_fd(int fd, t_line **begin)
 {
@@ -67,7 +90,7 @@ static int		put_next_line(char **line, char *buf, t_line *elem, int ret)
 int				get_next_line(const int fd, char **line)
 {
 	static t_line	*begin = NULL;
-	t_line			*elem;
+	t_line			*elem = NULL;
 	char			buf[BUFF_SIZE + 1];
 	int				ret;
 
@@ -78,8 +101,7 @@ int				get_next_line(const int fd, char **line)
 	ft_bzero(buf, BUFF_SIZE + 1);
 	if (fd >= 0 && (elem = get_fd(fd, &begin)))
 	{
-		if (!TMP)
-			TMP = ft_strnew(BUFF_SIZE);
+		!TMP ? TMP = ft_strnew(BUFF_SIZE) : 0;
 		while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
 		{
 			if (put_next_line(line, buf, elem, ret))
@@ -90,5 +112,6 @@ int				get_next_line(const int fd, char **line)
 			if (put_next_line(line, buf, elem, ret))
 				return (1);
 	}
+	get_free(begin, elem);
 	return (0);
 }

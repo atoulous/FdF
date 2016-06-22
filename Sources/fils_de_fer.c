@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:56:20 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/20 17:54:30 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/22 19:18:12 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,38 @@
 
 void	reset_pos(t_struct *t_var)
 {
-	ZOOM = 20;
+	ZOOM = YMAX < 30 ? 20 : 10;
 	H = 1;
 	WI = 0;
 	HI = 0;
-	CT1 = 1;
-	CT2 = 1;
+	A = 2;
 }
 
 int		get_key(int keycode, t_struct *t_var)
 {
-	refresh_screen(t_var);
 	if (keycode == 53)
-		exit(0);
+	{
+		free_fils(t_var);
+		exit(EXIT_SUCCESS);
+	}
+	refresh_screen(t_var);
 	if (keycode == 24 || keycode == 69)
-		ZOOM += (ZOOM < 50) ? 2 : 0;
+		ZOOM += (ZOOM < 200) ? 2 : 0;
 	if (keycode == 27 || keycode == 78)
 		ZOOM -= (ZOOM > 0) ? 2 : 0;
 	if (keycode == 123 || keycode == 124)
-		WI += keycode == 123 ? -10 : 10;
-	if (keycode == 125)
-		HI += HI < (HEIGHT_WIN / 2) ? 10 : 0;
-	if (keycode == 126)
-		HI -= HI > (HEIGHT_WIN / -2) && (H < 15) ? 10 : 0;
+		WI += keycode == 123 ? -20 : 20;
+	if (keycode == 125 || keycode == 126)
+		HI += keycode == 125 ? 20 : -20;
 	if (keycode == 116)
-		H += (H < 30 && HI < (HEIGHT_WIN / 2)) ? 1 : 0;
+		H += H < 30 ? 1 : 0;
 	if (keycode == 121)
-		H -= (H > -30) ? 1 : 0;
-	if (keycode == 8)
-		(CT1 += CT1 < 1 ? 0.1 : 0) && (CT2 += CT2 < 1 ? 0.1 : 0);
-	if (keycode == 9)
-		(CT1 -= CT1 > .5 ? 0.1 : 0) && (CT2 -= CT2 > 0.5 ? 0.1 : 0);
-	if (keycode == 49)
-		reset_pos(t_var);
+		H -= H > -30 ? 1 : 0;
+	if (keycode == 75)
+		(A += A < 99 ? 0.1 : 0);
+	if (keycode == 67)
+		(A -= A > 0.7 ? 0.1 : 0);
+	keycode == 49 ? reset_pos(t_var) : 0;
 	return (0);
 }
 
@@ -63,6 +62,7 @@ int		init_fils_de_flute(t_struct *t_var, char *map)
 	WI = 0;
 	CT1 = 1;
 	CT2 = 1;
+	A = 2;
 	ZMAX = 0;
 	MLX = mlx_init();
 	WIN = mlx_new_window(MLX, WIDTH_WIN, HEIGHT_WIN, map);
@@ -80,9 +80,8 @@ void	fils_de_fer(int fd, char *map)
 	parse_fils_de_feu(t_var, fd);
 	init_fils_de_flute(t_var, map);
 	mlx_loop_hook(MLX, fils_lines, t_var);
-	mlx_hook(WIN, 2, 0, get_key, t_var);
+	mlx_hook(WIN, KeyPress, KeyPressMask, get_key, t_var);
 	mlx_loop(MLX);
-	mlx_destroy_image(MLX, IMG);
 	free_fils(t_var);
 }
 

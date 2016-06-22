@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/07 11:34:04 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/20 18:41:08 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/22 18:48:22 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ void	free_fils(t_struct *t_var)
 			free(TAB[j][i]);
 		free(TAB[j]);
 	}
-	free(DATA);
+	mlx_destroy_image(MLX, IMG);
+	MLX = NULL;
+	WIN = NULL;
+	IMG = NULL;
 	free(t_var);
 }

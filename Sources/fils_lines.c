@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/16 22:54:22 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/20 16:50:04 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/21 15:50:20 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		find_y(t_struct *t_var, int x, int y)
 		if (Z <= -20)
 			COLOR = mlx_get_color_value(MLX, 0x003366);
 	}
-	return ((ZOOM * (CT1 / 2 * x + CT2 / 2 * y) - Z) + (HEIGHT_WIN / 3 + HI));
+	return ((ZOOM * (CT1 / A * x + CT2 / A * y) - Z) + (HEIGHT_WIN / 3 + HI));
 }
 
 void	fils_line_x(t_struct *t_var)

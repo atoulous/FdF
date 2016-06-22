@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 18:22:19 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/20 20:27:52 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/22 15:28:02 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include "../Libs/libft/libft.h"
 # include "mlx.h"
-# include "math.h"
+# include <math.h>
+# include </System/Library/Frameworks/Tk.framework/Versions/8.5/Headers/X11/X.h>
 
 # define BASE10 "0123456789"
 # define BASE16 "0123456789ABCDEF"
@@ -53,6 +54,7 @@
 # define ZMAX t_var->zmax
 # define CT1 t_var->ct1
 # define CT2 t_var->ct2
+# define A t_var->a
 # define KEY_USE t_var->key_use
 
 typedef struct		s_struct
@@ -90,6 +92,7 @@ typedef struct		s_struct
 	int				zmax;
 	float			ct1;
 	float			ct2;
+	float			a;
 	int				key_use;
 }					t_struct;
 
