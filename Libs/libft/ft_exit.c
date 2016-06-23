@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/21 15:44:27 by atoulous          #+#    #+#             */
-/*   Updated: 2016/04/21 16:04:18 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/23 15:17:45 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_exit(int what)
 {
-	if (what)
-		ft_putstr("error");
+	if (what == 1)
+		ft_putendl("map error");
 	exit(0);
 }

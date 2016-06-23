@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 17:56:20 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/22 19:18:12 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/23 15:43:02 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,14 @@ int		main(int ac, char **av)
 	int		fd;
 
 	if (ac < 2)
-		ft_putstr("Usage : ./fdf <filename>\n");
+		ft_putstr("Usage : ./fdf <map>\n");
 	else
 	{
 		fd = open(av[1], O_RDONLY);
 		if (fd > 0)
 			fils_de_fer(fd, av[1]);
+		else
+			ft_putendl("Usage : it's not a valid map, find maps in file Maps");
 		close(fd);
 	}
 	return (0);

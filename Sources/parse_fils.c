@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/07 11:34:04 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/22 18:48:22 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/23 15:19:37 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,9 @@ void	parse_fils_de_feu(t_struct *t_var, int fd)
 	MAP = ft_strnew(BUFF_SIZE);
 	while (get_next_line(fd, &line))
 	{
-		if (!XMAX)
-			XMAX = get_xmax(line);
+		!XMAX ? XMAX = get_xmax(line) : 0;
+		if (XMAX != get_xmax(line))
+			return (ft_exit(1));
 		MAP = ft_strjoinfree(MAP, line);
 		MAP = ft_strjoinfree(MAP, "\n");
 		free(line);
@@ -86,7 +87,6 @@ void	parse_fils_de_feu(t_struct *t_var, int fd)
 		free(PLS[y]);
 	}
 	free(PLS);
-	free(MAP);
 }
 
 void	free_fils(t_struct *t_var)
@@ -106,5 +106,6 @@ void	free_fils(t_struct *t_var)
 	MLX = NULL;
 	WIN = NULL;
 	IMG = NULL;
+	free(MAP);
 	free(t_var);
 }
