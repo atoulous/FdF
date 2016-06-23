@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/07 11:34:04 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/23 15:19:37 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/23 20:20:33 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	parse_fils_de_feu(t_struct *t_var, int fd)
 	while (get_next_line(fd, &line))
 	{
 		!XMAX ? XMAX = get_xmax(line) : 0;
-		if (XMAX != get_xmax(line))
+		if (XMAX != get_xmax(line) || !XMAX)
 			return (ft_exit(1));
 		MAP = ft_strjoinfree(MAP, line);
 		MAP = ft_strjoinfree(MAP, "\n");
@@ -78,8 +78,8 @@ void	parse_fils_de_feu(t_struct *t_var, int fd)
 		YMAX++;
 	}
 	PLS = ft_strsplit(MAP, '\n');
-	if (!(TAB = (char***)ft_memalloc(sizeof(char**) * YMAX + 1)))
-		return (exit(EXIT_FAILURE));
+	if (!(TAB = (char***)ft_memalloc(sizeof(char**) * YMAX + 1)) || !XMAX)
+		return (ft_exit(1));
 	y = -1;
 	while (PLS[++y])
 	{
