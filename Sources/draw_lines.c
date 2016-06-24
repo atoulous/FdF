@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/15 18:45:39 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/23 20:14:57 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/24 22:27:55 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,9 @@ void	fill_image(t_struct *t_var)
 		g = 0x000000 >> 8;
 		b = 0x000000 >> 0;
 	}
-	if (X >= 0 && Y >= 0 && X < WIDTH_WIN && Y < HEIGHT_WIN)
-	{
-		DATA[Y * SIZELINE + X * (BPP / 8)] = r;
-		DATA[Y * SIZELINE + X * (BPP / 8) + 1] = g;
-		DATA[Y * SIZELINE + X * (BPP / 8) + 2] = b;
-	}
+	DATA[Y * SIZELINE + X * (BPP / 8)] = r;
+	DATA[Y * SIZELINE + X * (BPP / 8) + 1] = g;
+	DATA[Y * SIZELINE + X * (BPP / 8) + 2] = b;
 }
 
 void	draw_line_if(t_struct *t_var, int xinc, int yinc)

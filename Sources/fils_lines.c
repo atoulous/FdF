@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/16 22:54:22 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/21 15:50:20 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/24 22:27:56 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,16 @@ void	fils_line_x(t_struct *t_var)
 	while (++y < YMAX)
 	{
 		x = -1;
-		while (++x < XMAX)
+		while (++x < XMAX - 1)
 		{
-			if (x < XMAX - 1 && y < YMAX)
-			{
-				get_color(t_var, y, x);
-				X1 = find_x(t_var, x, y);
-				X2 = find_x(t_var, x + 1, y);
-				Y1 = find_y(t_var, x, y);
-				Y2 = find_y(t_var, x + 1, y);
+			get_color(t_var, y, x);
+			X1 = find_x(t_var, x, y);
+			X2 = find_x(t_var, x + 1, y);
+			Y1 = find_y(t_var, x, y);
+			Y2 = find_y(t_var, x + 1, y);
+			if ((X1 >= 0 && Y1 >= 0 && X1 < WIDTH_WIN && Y1 < HEIGHT_WIN) &&
+					(X2 >= 0 && Y2 >= 0 && X2 < WIDTH_WIN && Y2 < HEIGHT_WIN))
 				draw_lines(t_var);
-			}
 		}
 	}
 }
@@ -66,20 +65,19 @@ void	fils_line_y(t_struct *t_var)
 	int		y;
 
 	y = -1;
-	while (++y < YMAX)
+	while (++y < YMAX - 1)
 	{
 		x = -1;
 		while (++x < XMAX)
 		{
-			if (x < XMAX && y < YMAX - 1)
-			{
-				get_color(t_var, y, x);
-				X1 = find_x(t_var, x, y);
-				X2 = find_x(t_var, x, y + 1);
-				Y1 = find_y(t_var, x, y);
-				Y2 = find_y(t_var, x, y + 1);
+			get_color(t_var, y, x);
+			X1 = find_x(t_var, x, y);
+			X2 = find_x(t_var, x, y + 1);
+			Y1 = find_y(t_var, x, y);
+			Y2 = find_y(t_var, x, y + 1);
+			if ((X1 >= 0 && Y1 >= 0 && X1 < WIDTH_WIN && Y1 < HEIGHT_WIN) &&
+					(X2 >= 0 && Y2 >= 0 && X2 < WIDTH_WIN && Y2 < HEIGHT_WIN))
 				draw_lines(t_var);
-			}
 		}
 	}
 }
