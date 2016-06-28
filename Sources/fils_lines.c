@@ -6,7 +6,7 @@
 /*   By: atoulous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/16 22:54:22 by atoulous          #+#    #+#             */
-/*   Updated: 2016/06/24 22:27:56 by atoulous         ###   ########.fr       */
+/*   Updated: 2016/06/28 18:01:02 by atoulous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		find_x(t_struct *t_var, int x, int y)
 int		find_y(t_struct *t_var, int x, int y)
 {
 	Z = H * ft_atoi(TAB[y][x]);
+	Z /= 4;
 	if (!COLOR)
 	{
 		if (Z > 100)
